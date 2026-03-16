@@ -1,4 +1,4 @@
-name: Build and Push Docker Image
+name: Build Docker Image
 
 on:
   push:
@@ -7,7 +7,7 @@ on:
   workflow_dispatch:
 
 jobs:
-  build:
+  docker:
     runs-on: ubuntu-latest
 
     permissions:
@@ -18,17 +18,17 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
-      - name: Login to GHCR
+      - name: Login GHCR
         uses: docker/login-action@v3
         with:
           registry: ghcr.io
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: Build Image
+      - name: Build image
         run: |
-          docker build -t ghcr.io/${{ github.repository_owner }}/kaiyuan:2026 .
+          docker build -t ghcr.io/wxf190/kaiyuan:2026 .
 
-      - name: Push Image
+      - name: Push image
         run: |
-          docker push ghcr.io/${{ github.repository_owner }}/kaiyuan:2026
+          docker push ghcr.io/wxf190/kaiyuan:2026
